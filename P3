@@ -1,0 +1,83 @@
+tasks = []
+
+def add_task():
+    print("--- ADD SCHOOL TASK ---")
+
+    task_name = input("Enter task name: ")
+    subject = input("Enter subject: ")
+    deadline = input("Enter deadline (e.g., Oct 30): ")
+
+    if task_name.strip() == "" or subject.strip() == "" or deadline.strip() == "":
+        print("[ERROR] All fields are required.")
+    else:
+        task = {
+            "name": task_name,
+            "subject": subject,
+            "deadline": deadline,
+            "status": "Pending"
+        }
+
+        tasks.append(task)
+        print("[SUCCESS] Task added successfully!")
+
+
+def view_tasks():
+    print("--- MY SCHOOL TASKS ---")
+
+    if not tasks:
+        print("No tasks recorded yet.")
+    else:
+        for i, task in enumerate(tasks, start=1):
+            print(f"{i}. {task['name']}")
+            print(f"   Subject: {task['subject']}")
+            print(f"   Deadline: {task['deadline']}")
+            print(f"   Status: {task['status']}")
+            print("-" * 30)
+
+
+def complete_task():
+    view_tasks()
+
+    if not tasks:
+        return
+
+    try:
+        number = int(input("Enter task number to mark as completed: "))
+
+        if 1 <= number <= len(tasks):
+            tasks[number - 1]["status"] = "Completed"
+            print("[SUCCESS] Task marked as completed!")
+        else:
+            print("[ERROR] Invalid task number.")
+
+    except ValueError:
+        print("[ERROR] Please enter a valid number.")
+
+
+def main():
+    while True:
+        print("=======================================")
+        print("            Task Tracker ")
+        print("=======================================")
+        print("1. Add School Task")
+        print("2. View All Tasks")
+        print("3. Mark Task as Completed")
+        print("4. Exit")
+
+        choice = input("Select option (1-4): ")
+
+        if choice == "1":
+            add_task()
+        elif choice == "2":
+            view_tasks()
+        elif choice == "3":
+            complete_task()
+        elif choice == "4":
+            print("Thank you for using StudyTrack!")
+            break
+        else:
+            print("[ERROR] Invalid option. Please choose 1-4.")
+
+
+if __name__ == "__main__":
+    main()
